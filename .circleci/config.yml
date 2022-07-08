@@ -89,7 +89,7 @@ jobs:
 
   scan-backend:
     docker:
-      # Docker image here
+      - image: circleci/node:13.8.0
     steps:
       # Checkout code from git
       - checkout
@@ -117,7 +117,7 @@ workflows:
           requires: [build-backend]
       - scan-frontend:
           requires: [test-frontend]
-       scan-backend:
+      - scan-backend:
           requires: [test-backend]
       
 

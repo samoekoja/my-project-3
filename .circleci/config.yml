@@ -36,7 +36,7 @@ jobs:
             cd frontend
             npm install
             npm run build
-          
+         
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
@@ -129,6 +129,8 @@ jobs:
       - image: amazon/aws-cli 
     steps:
       - checkout
+      - run: aws s3 ls
+      - run: aws iam list-users 
       - run: yum install -y tar gzip
       - run:
           name: Ensure back-end infrastructure exists

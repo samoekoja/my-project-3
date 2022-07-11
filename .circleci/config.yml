@@ -161,6 +161,30 @@ jobs:
       # Here's where you will add some code to rollback on failure   
       - destroy-environment
 
+  configure-infrastructure:
+    docker:
+      - image: python:3.10-alpine3.16
+    steps:
+      # Checkout code from git
+      - checkout
+      # Add ssh keys with fingerprint
+      - add_ssh_keys:
+          fingerprints: ["f2:85:d8:9f:30:d4:d3:ca:5d:43:71:1c:70:5d:93:4c"]
+      # attach workspace
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: Install dependencies
+          command: |
+            apk add --update ansible \
+            pip3 install --upgrade pip \
+            pip3 install awscli
+
+      - run:
+          name: Configure server
+          command: |
+            cd .circleci/ansible
+            ansible-playbook -i inventory.txt configure-server.yml
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows
@@ -178,7 +202,7 @@ workflows:
       - scan-backend:
           requires: [test-backend]
       - deploy-infrastructure:
-          requires: [test-frontend, test-backend, scan-frontend, scan-backend]
+          requires: [scan-frontend, scan-backend]
       
 
       

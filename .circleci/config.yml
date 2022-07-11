@@ -32,17 +32,17 @@ commands:
         type: string      
     steps:
       - run:
-        name: Revert migrations
-        when: on_fail
-        command: |
-          SUCCESS=$(curl --insecure  https://kvdb.io/U36CT66k33kaEwRopovCZC/migration_<< parameters.workflow_id >>)
-          # Logic for reverting the database state
-          if (( $SUCCESS == 1 ));
-          then
-              cd ~/project/backend
-              npm install
-              npm run migration:revert
-          fi  
+          name: Revert migrations
+          when: on_fail
+          command: |
+            SUCCESS=$(curl --insecure  https://kvdb.io/U36CT66k33kaEwRopovCZC/migration_<< parameters.workflow_id >>)
+            # Logic for reverting the database state
+            if (( $SUCCESS == 1 ));
+            then
+                cd ~/project/backend
+                npm install
+                npm run migration:revert
+            fi  
 
 jobs:
   build-frontend:

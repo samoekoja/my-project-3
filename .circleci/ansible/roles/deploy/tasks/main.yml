@@ -1,0 +1,24 @@
+---
+
+- name: "Create directory for Server"
+  file:
+    path: ~/server
+    state: directory
+
+- name: "Extract files"
+  become: true
+  unarchive:
+    src: artifact.tar.gz
+    dest: ~/server
+
+- name: "Install dependencies"
+  shell: |
+    cd ~/server
+    npm i
+
+- name: "Run Server"
+  shell: |
+    cd ~/server
+    pm2 stop default
+    pm2 start npm --start
+

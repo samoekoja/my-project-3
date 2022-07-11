@@ -4,6 +4,10 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/2.0/configuration-reference/#jobs
 
+orbs:
+  aws-cli: circleci/aws-cli@3.1.1
+
+
 commands:
   destroy-environment:
     description: Destroy back-end and front-end cloudformation stacks given a workflow ID.
@@ -20,7 +24,25 @@ commands:
             aws cloudformation delete-stack --stack-name udapeople-backend-<< parameters.Workflow_ID >>
           
             aws cloudformation delete-stack --stack-name udapeople-frontend-<< parameters.Workflow_ID >>
-
+  revert-migrations:
+    description: Revert the last migration
+    parameters:
+        workflow_id:
+            type: string      
+    steps:
+        - run:
+            name: Revert migrations
+            when: on_fail
+            command: |
+                # Example: kvdb.io
+                SUCCESS=$(curl --insecure  https://kvdb.io/U36CT66k33kaEwRopovCZC/migration_<< parameters.workflow_id >>)
+                # Logic for reverting the database state
+                if (( $SUCCESS == 1 ));
+                then
+                    cd ~/project/backend
+                    npm install
+                    npm run migration:revert
+                fi  
 
 jobs:
   build-frontend:
@@ -195,6 +217,7 @@ jobs:
       - checkout
       - restore_cache:
           keys: [backend-build]
+      - aws-cli/setup
       - run:
           name: Run migrations
           command: |
@@ -209,6 +232,7 @@ jobs:
             then
                 curl https://kvdb.io/U36CT66k33kaEwRopovCZC/migration_${CIRCLE_WORKFLOW_ID:0:7}  -d '1'
             fi
+      - destroy-environment
 
 # Invoke jobs via workflows
 # See: https://circleci.com/docs/2.0/configuration-reference/#workflows

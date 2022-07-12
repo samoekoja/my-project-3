@@ -270,7 +270,6 @@ jobs:
       # Checkout code from git
       - checkout
       - aws-cli/setup
-      - node/install
       # Add ssh keys with fingerprint
       - add_ssh_keys:
           fingerprints: ["f2:85:d8:9f:30:d4:d3:ca:5d:43:71:1c:70:5d:93:4c"]
@@ -281,6 +280,9 @@ jobs:
           name: Install dependencies
           command: |
             apk add --update ansible openssh-client tar gzip
+            apk add curl
+            apk add --update nodejs
+            apk add --update npm
       - run:
           name: Deploy backend
           command: |

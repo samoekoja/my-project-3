@@ -228,6 +228,7 @@ jobs:
       - run:
           name: Send migration results to kvdb.io
           command: |
+            ls ~/project/.circleci
             ls ~/project/backend
             if grep -q "has been executed successfully." ~/project/backend/migrations_dump.txt
             then
@@ -245,7 +246,7 @@ jobs:
       - run:
           name: Get backend url
           command: |
-            export BACKEND_IP=$(<project/.circleci/ansible/inventory.txt)
+            export BACKEND_IP=$(<~/project/.circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL = ${API_URL}"
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
@@ -319,7 +320,7 @@ jobs:
       - run:
           name: Backend Smoke Test
           command: |
-            export BACKEND_IP=$(<project/.circleci/ansible/inventory.txt)
+            export BACKEND_IP=$(<~/project/.circleci/ansible/inventory.txt)
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"

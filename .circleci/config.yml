@@ -238,7 +238,7 @@ jobs:
   
   deploy-frontend:
     docker:
-      - image: sleavely/node-awscli:latest
+      - image: sleavely/node-awscli:12.x
     steps:
       # Checkout code from git
       - checkout

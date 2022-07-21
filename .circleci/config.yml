@@ -383,7 +383,7 @@ jobs:
             echo OldWorkflowID: "${OldWorkflowID}"
             echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
             echo ${OldWorkflowID}
-            curl https://kvdb.io/U36CT66k33kaEwRopovCZC/OLD_${CIRCLE_WORKFLOW_ID:0:7} -d "${OldWorkflowID}"
+            curl https://kvdb.io/U36CT66k33kaEwRopovCZC/OLD_${CIRCLE_WORKFLOW_ID:0:7} -d "${OldWorkflowID:10:16}"
 
 
       - run:

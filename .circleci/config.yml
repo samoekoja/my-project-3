@@ -397,7 +397,7 @@ jobs:
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
       - revert-migrations
-      
+
   cleanup:
     docker:
       - image: amazon/aws-cli
@@ -413,7 +413,7 @@ jobs:
             export OldWorkflowID=$(curl https://kvdb.io/U36CT66k33kaEwRopovCZC/OLD_${CIRCLE_WORKFLOW_ID:0:7})
             echo Old id: $OldWorkflowID
 
-            if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
+            if [[ "${STACKS[@]}" != "${OldWorkflowID}" ]]
             then
               echo "Cleanup"
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive

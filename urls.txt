@@ -11,4 +11,4 @@ url-04: Healthy Backend
 http://3.91.149.252:3030/api/status
 
 url-05: Evidence Of Prometheus Server
-http://ec2-3-83-174-26.compute-1.amazonaws.com:9090/graph
+http://ec2-54-210-156-121.compute-1.amazonaws.com:9090/targets

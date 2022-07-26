@@ -2,13 +2,13 @@ url-01: Public Github:
 https://github.com/samoekoja/my-project-3
 
 url-02: S3 public URL
-http://udapeople-a9d7683.s3-website-us-east-1.amazonaws.com
+http://udapeople-1373516.s3-website-us-east-1.amazonaws.com
 
 url-03: CloudFront
-https://d1917a95gi6wqy.cloudfront.net
+http://d1917a95gi6wqy.cloudfront.net/#/employees
 
 url-04: Healthy Backend
-http://3.91.149.252:3030/api/status
+http://3.89.211.166:3030/api/status
 
 url-05: Evidence Of Prometheus Server
 http://ec2-54-210-156-121.compute-1.amazonaws.com:9090/targets
